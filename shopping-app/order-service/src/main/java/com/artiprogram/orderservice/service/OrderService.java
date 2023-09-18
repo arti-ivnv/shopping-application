@@ -28,7 +28,7 @@ public class OrderService {
     // Should be the same name as function name in the config Bean
     private final  WebClient.Builder webClientBuilder;
     
-    public void placeOrder(OrderRequest orderRequest){
+    public String placeOrder(OrderRequest orderRequest){
         Order order = new Order();
         
 
@@ -58,6 +58,7 @@ public class OrderService {
         
         if (allProductsInStock){
             orderRepository.save(order);
+            return "Order Placed Successfully";
         } else { 
             throw new IllegalArgumentException("Product is not in stock, please try later");
         }
