@@ -16,6 +16,8 @@ import com.artiprogram.orderservice.model.Order;
 import com.artiprogram.orderservice.model.OrderLineItems;
 import com.artiprogram.orderservice.repository.OrderRepository;
 
+import io.micrometer.observation.Observation;
+import io.micrometer.observation.ObservationRegistry;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -27,6 +29,8 @@ public class OrderService {
 
     // Should be the same name as function name in the config Bean
     private final  WebClient.Builder webClientBuilder;
+    
+    private final ObservationRegistry observationRegistry;
     
     public String placeOrder(OrderRequest orderRequest){
         Order order = new Order();
@@ -45,6 +49,10 @@ public class OrderService {
         // Get all the requested skuCodes of the order.
         // order.getOrderLineItemsList().stream().map(orderLineItem -> orderLineItem.getSkuCode()).toList();
         List<String> skuCodes = order.getOrderLineItemsList().stream().map(OrderLineItems::getSkuCode).toList();
+
+
+        // Observation inventoryServiceObservation = Observation.createNotStarted("inventory-service-lookup", this.observationRegistry);
+        // inventoryServiceObservation.lowCardinalityKeyValue("call", "inventory-service");
 
         // Call Inventory service, and place order if producr is in stock
         InventoryResponse[] inventoryResponseArray = webClientBuilder.build().get().uri("http://inventory-service/api/inventory", 
