@@ -12,4 +12,4 @@ Things that I was not able to implement are: <br><br>
 2) Dockerization of the application<br>
 3) Monitoring (via Promethous and  Graphana)<br>
 
-I guess it's good to say that "Every fail is nothing more than an experiance" and I am sad that I cannnot get this project done till the end.<br>
+I guess it's good to say that "Every fail is nothing more than experiance" and I am sad that I cannnot get this project done till the end.<br>
